@@ -6,26 +6,29 @@ import { BullAdapter } from "@bull-board/api/bullAdapter";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 import { ExpressAdapter } from "@bull-board/express";
 
-function main() {
-  const queue = new Queue("first");
+const app = express();
 
-  const serverAdapter = new ExpressAdapter();
+/**
+ * Create a new queue
+ *
+ */
+const queue = new Queue("FirstQueue");
 
-  serverAdapter.setBasePath("/admin/queues");
+/**
+ * Create a new server adapter
+ */
+const serverAdapter = new ExpressAdapter();
 
-  const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
-    queues: [new BullMQAdapter(queue)],
-    serverAdapter: serverAdapter,
-  });
+serverAdapter.setBasePath("/admin/queues");
+const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
+  queues: [new BullMQAdapter(queue)],
+  serverAdapter: serverAdapter,
+});
 
-  const app = express();
-  app.use("/admin/queues", serverAdapter.getRouter());
+app.use("/admin/queues", serverAdapter.getRouter());
 
-  app.listen(3000, () => {
-    console.log("Running on 3000...");
-    console.log("For the UI, open http://localhost:3000/admin/queues");
-    console.log("Make sure Redis is running on port 6379 by default");
-  });
-}
-
-main();
+app.listen(3000, () => {
+  console.log("Running on 3000....");
+  console.log("For the UI, open http://localhost:3000/admin/queues");
+  console.log("Make sure Redis is running on port 6379 by default");
+});
