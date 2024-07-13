@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@bull-board/api": "^5.21.0",
     "@bull-board/express": "^5.21.0",
