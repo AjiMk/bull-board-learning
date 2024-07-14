@@ -20,12 +20,25 @@ const queue = new Queue("FirstQueue");
 const serverAdapter = new ExpressAdapter();
 
 serverAdapter.setBasePath("/admin/queues");
-const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
+
+createBullBoard({
   queues: [new BullMQAdapter(queue)],
   serverAdapter: serverAdapter,
+  options: {
+    uiConfig:{
+      boardTitle: "Queue Board",
+      miscLinks: [
+        {text: 'Logout', url: '/logout'}
+      ],
+    },
+  }
 });
 
 app.use("/admin/queues", serverAdapter.getRouter());
+
+app.get("/logout", (req, res) => {
+  return res.end();
+})
 
 app.listen(3000, () => {
   console.log("Running on 3000....");
