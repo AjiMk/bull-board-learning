@@ -8,6 +8,7 @@ This repository is a personal project for learning how to use Bull-Board with Ty
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Scripts](#scripts)
+- [Bull-Board APIs](#bull-board-apis)
 - [Learning Progress](#learning-progress)
 - [Resources](#resources)
 - [Contributing](#contributing)
@@ -61,6 +62,56 @@ npm start
 - `npm start`: Starts the application.
 - `npm run build`: Compiles the TypeScript code to JavaScript.
 
+
+## Bull-Board APIs
+
+Here is the list of internal APIs utilized by the bull-board. All actions related to bull or bullmq are executed through these APIs. If you wish to contribute to the the bull-board API, please review this [API package](https://github.com/felixmosh/bull-board/tree/master/packages/api) from bull-board.
+
+
+**Base URL:** `http://localhost:3000`
+
+#### Redis stats
+`GET '/api/redis/stats`
+
+#### Queues
+`GET /api/redis/stats`
+
+#### Job logs
+`GET /api/queues/:queueName/:jobId/logs`
+
+#### Job
+`GET /api/queues/:queueName/:jobId`
+
+#### Add new Job
+`POST /api/queues/:queueName/add`
+
+#### Retry all jobs
+`PUT /api/queues/:queueName/retry/:queueStatus`
+
+#### Promote Queue
+`PUT /api/queues/:queueName/promote`
+
+#### Clean queue
+`PUT /api/queues/:queueName/clean/:queueStatus`
+
+#### Pause Queue
+`PUT /api/queues/:queueName/pause`
+
+#### Resume Queue
+`PUT /api/queues/:queueName/resume`
+
+#### Empty Queue
+`PUT /api/queues/:queueName/empty`
+
+#### Retry Job
+`PUT /api/queues/:queueName/:jobId/retry/:queueStatus`
+
+#### Remove Job 
+`PUT /api/queues/:queueName/:jobId/clean`
+
+#### Promote Job
+`PUT /api/queues/:queueName/:jobId/promote`
+
 ## Learning Progress
 
 This section will be updated regularly with my learning progress and notes:
@@ -69,6 +120,19 @@ This section will be updated regularly with my learning progress and notes:
 
 - Set up the project with TypeScript, Node.js, Express, and Bull-Board.
 - Created a basic Express server and integrated Bull-Board.
+
+### Day 2
+
+- Implemented the bull-board multi-instance example in the example/multiple-instance branch.
+- Tested:
+    - Job progress
+    - Job retry from completed stage
+- Implemented UI customizations and queue formatter options.
+- Added an API endpoint to dispatch a job: /add/<id>
+- Learned the core structure of Bull-Board, including:
+    - Adapters (Server and Queue)
+    - Internal APIs
+    - How the bull-board instance injects APIs into the provided server adapters.
 
 ## Resources
 
